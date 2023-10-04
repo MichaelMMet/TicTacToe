@@ -5,10 +5,24 @@
     <link rel="stylesheet" href="style.css" />
     <title>TicTacToe</title>
   </head>
+
   <body>
     <div class="content">
       <div class="header">
         <h1>TicTacToe</h1>
+        <button id="modalBtn" class="openModalBtn"></button>
+      </div>
+      <div class="modal" id="myModal">
+        <div class="modalContent">
+          <span class="close">&times;</span>
+          <div class="modalHeader">
+            <h1>Options</h1>
+          </div>
+          <div class="modalOption">
+            <label for="pvp"></label>
+            <input type="radio" id="pvp" name="gamemodeChoice" />
+          </div>
+        </div>
       </div>
       <div class="gameWrapper">
         <div class="gameBoard">
@@ -25,4 +39,5 @@
       </div>
     </div>
   </body>
+  <script src="index.js"></script>
 </html>
