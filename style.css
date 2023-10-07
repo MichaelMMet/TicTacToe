@@ -59,10 +59,15 @@ display: flex;
 }
 
 .gameBoard > div{
-    background-color: blue;
     border: 1px solid black;
 }
 
-#three{
-background-color: red;
+.xMove{
+    font-size: 15px;
+    color: red;
+}
+
+.oMove {
+    font-size: 15px;
+    color: blue;
 }
