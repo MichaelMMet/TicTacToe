@@ -19,8 +19,44 @@
             <h1>Options</h1>
           </div>
           <div class="modalOption">
-            <label for="pvp"></label>
-            <input type="radio" id="pvp" name="gamemodeChoice" />
+            <form id="myForm">
+              <div class="formPart">
+                <label>Player One Name:</label>
+                <input
+                  type="text"
+                  id="nameOne"
+                  class="formClass"
+                  name="playerOneName"
+                />
+              </div>
+              <div class="formPart">
+                <label>Player Two Name:</label>
+                <input
+                  type="text"
+                  id="nameTwo"
+                  class="formClass"
+                  name="playerTwoName"
+                />
+              </div>
+              <div class="formPart">
+                <label for="pvp"></label>
+                <input type="radio" id="pvp" value="0" name="gamemodeChoice" />
+              </div>
+              <div class="formPart">
+                <label for="ai"></label>
+                <input type="radio" id="ai" value="1" name="gamemodeChoice" />
+              </div>
+              <div class="formPart">
+                <label for="aiHard"></label>
+                <input
+                  type="radio"
+                  id="aiHard"
+                  value="2"
+                  name="gamemodeChoice"
+                />
+              </div>
+              <button type="submit" id="modalSubmit">Start Game</button>
+            </form>
           </div>
         </div>
       </div>
@@ -28,7 +64,7 @@
         <div class="gameBoard">
           <div class="gameSpace" id="1"></div>
           <div class="gameSpace" id="2"></div>
-          <div class="gameSpace" id="three"></div>
+          <div class="gameSpace" id="3"></div>
           <div class="gameSpace" id="4"></div>
           <div class="gameSpace" id="5"></div>
           <div class="gameSpace" id="6"></div>
