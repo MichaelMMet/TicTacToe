@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const initializeVariables = (data) => {
     data.gamemodeChoice = +data.gamemodeChoice;
 
-    data.board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    data.board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     data.playerOne = "X";
     data.playerOne = "O";
     data.round = 0;
@@ -57,20 +57,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log(data.board[parseInt(gameSpace.id)]);
 
-    if (data.board[parseInt(gameSpace.id)] != -1) {
+    if (data.board[parseInt(gameSpace.id)] != 'X' ||data.board[parseInt(gameSpace.id)] != 'Y') {
       if ((data.currentPlayer == 'X')) {
         const newMove = document.createElement("p");
         newMove.classList.add("xMove");
         newMove.innerHTML = 'X';
         data.currentPlayer = 'O';
         gameSpace.appendChild(newMove);
-        data.board[parseInt(gameSpace.id)] = -1;
+        data.board[parseInt(gameSpace.id)] = 'X';
       }else if((data.currentPlayer == 'O')) {
         const newMove = document.createElement("p");
         newMove.classList.add("oMove");
         newMove.innerHTML = "O";
         data.currentPlayer = "X";
         gameSpace.appendChild(newMove);
+        data.board[parseInt(gameSpace.id)] = 'Y';
       }
 
     }else{
