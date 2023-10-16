@@ -57,28 +57,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log(data.board[parseInt(gameSpace.id)]);
 
-    if (data.board[parseInt(gameSpace.id)] != 'X' ||data.board[parseInt(gameSpace.id)] != 'Y') {
+    if (data.board[parseInt(gameSpace.id -1 )] != 'X' && data.board[parseInt(gameSpace.id -1)] != 'Y') {
       if ((data.currentPlayer == 'X')) {
         const newMove = document.createElement("p");
         newMove.classList.add("xMove");
         newMove.innerHTML = 'X';
         data.currentPlayer = 'O';
         gameSpace.appendChild(newMove);
-        data.board[parseInt(gameSpace.id)] = 'X';
+        data.board[parseInt(gameSpace.id -1)] = 'X';
       }else if((data.currentPlayer == 'O')) {
         const newMove = document.createElement("p");
         newMove.classList.add("oMove");
         newMove.innerHTML = "O";
         data.currentPlayer = "X";
         gameSpace.appendChild(newMove);
-        data.board[parseInt(gameSpace.id)] = 'Y';
+        data.board[parseInt(gameSpace.id -1)] = 'Y';
       }
 
     }else{
       console.log("cant choose this space")
     }
+
+
+    checkForWin(data.board);
+
     console.log(data);
   };
+
+  function checkForWin(board) {
+    const winCombinations = [
+      [1, 2, 3], [4, 5, 6], [7, 8, 9], // Rows
+      [1, 4, 7], [2, 5, 8], [3, 6, 9], // Columns
+      [1, 5, 9], [3, 5, 7]             // Diagonals
+    ];
+  
+    for (const combination of winCombinations) {
+      const [a, b, c] = combination;
+      if (board[a - 1] === board[b - 1] && board[b - 1] === board[c - 1]) {
+       // return board[a - 1]; // Return the winning player (X or O)
+        if(board[a-1] == 'X'){
+          console.log("x win")
+          return board[a - 1]; 
+        }else{
+          console.log("y win")
+          return board[a - 1]; 
+        }
+      }
+    }
+    console.log("no winner")
+    return null; // No winner found
+  }
 
   // When the user clicks on the button, open the modal
   btn.onclick = function () {
