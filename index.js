@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     data.round = 0;
     data.currentPlayer = "X";
     data.gameOver = false;
+    data.availableSpots = []
   };
 
   const addEventListenerToGameBoard = (data) => {
@@ -56,7 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
     //console.log(gameSpace, data);
 
     console.log(data.board[parseInt(gameSpace.id)]);
-
+  if(data.gamemodeChoice == 0 && data.currentPlayer == O){
+    aiMove(gameSpace,data);
+  }
     if (data.board[parseInt(gameSpace.id -1 )] != 'X' && data.board[parseInt(gameSpace.id -1)] != 'Y') {
       if ((data.currentPlayer == 'X')) {
         const newMove = document.createElement("p");
@@ -83,6 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log(data);
   };
+
+  function aiMove(data, gameSpace){
+
+
+
+  }
 
   function checkForWin(board) {
     const winCombinations = [
