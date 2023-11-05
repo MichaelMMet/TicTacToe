@@ -26,13 +26,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const initializeVariables = (data) => {
     data.gamemodeChoice = data.gamemodeChoice;
-      
+
     data.board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     data.playerOne = "X";
     data.playerTwo = "O";
     data.round = 0;
     data.currentPlayer = "X";
     data.gameOver = false;
+    data.myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+ 
   };
 
   const addEventListenerToGameBoard = (data) => {
@@ -54,34 +56,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const playMove = (gameSpace, data) => {
     console.log("CHOICE" + data.gamemodeChoice);
+    if (data.gamemodeChoice == 0) {
+      console.log("hi");
 
-    console.log(data.board[parseInt(gameSpace.id)]);
+      console.log(data.board[parseInt(gameSpace.id)]);
 
-    if (data.board[parseInt(gameSpace.id  )] != 'X' && data.board[parseInt(gameSpace.id )] != 'Y') {
-      if ((data.currentPlayer == 'X')) {
+      if (
+        data.board[parseInt(gameSpace.id)] != "X" &&
+        data.board[parseInt(gameSpace.id)] != "Y"
+      ) {
+        if (data.currentPlayer == "X") {
+          const newMove = document.createElement("p");
+          newMove.classList.add("xMove");
+          newMove.innerHTML = "X";
+          data.currentPlayer = "O";
+          gameSpace.appendChild(newMove);
+          data.board[parseInt(gameSpace.id)] = "X";
+        } else if (data.currentPlayer == "O") {
+          const newMove = document.createElement("p");
+          newMove.classList.add("oMove");
+          newMove.innerHTML = "O";
+          data.currentPlayer = "X";
+          gameSpace.appendChild(newMove);
+          data.board[parseInt(gameSpace.id)] = "O";
+        }
+      } else {
+        console.log("cant choose this space");
+      }
+    } else if(data.gamemodeChoice == 1){
+      console.log("working")
+
+      if (data.currentPlayer == "X") {
         const newMove = document.createElement("p");
         newMove.classList.add("xMove");
-        newMove.innerHTML = 'X';
-        data.currentPlayer = 'O';
+        newMove.innerHTML = "X";
+        data.currentPlayer = "O";
         gameSpace.appendChild(newMove);
-        data.board[parseInt(gameSpace.id )] = 'X';
-      }else if((data.currentPlayer == 'O')) {
-        const newMove = document.createElement("p");
-        newMove.classList.add("oMove");
-        newMove.innerHTML = "O";
+        data.board[parseInt(gameSpace.id)] = "X";
+      
+        const newMove2 = document.createElement("p");
+        newMove2.classList.add("oMove");
+        newMove2.innerHTML = "O";
         data.currentPlayer = "X";
-        gameSpace.appendChild(newMove);
-        data.board[parseInt(gameSpace.id )] = 'O';
+        gameSpace.appendChild(newMove2);
+        data.board[aiMove(data)] = "O";
       }
 
-    }else{
-      console.log("cant choose this space")
     }
-
 
     checkForWin(data.board);
 
-    console.log(data);
+    //console.log(data);
   };
 
   /*
@@ -109,31 +134,47 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
   */
+  function aiMove(data) {
+    console.log("AIMOVE");
+    var randomInt = 1;
+    do {
+      randomInt = Math.floor(Math.random() * data.myArray.length);
+    } while (data.myArray[randomInt] != randomInt);
+    console.log(
+      "Random Int: " + randomInt + "array:" + data.myArray[randomInt]
+    );
+    data.myArray.splice(randomInt, 1);
+    console.log("Array: " + data.myArray);
+    return randomInt;
+  }
+
   function checkForWin(board) {
     const winCombinations = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-      [0, 4, 8], [2, 4, 6]             // Diagonals
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // Rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // Columns
+      [0, 4, 8],
+      [2, 4, 6], // Diagonals
     ];
-  
+
     for (const combination of winCombinations) {
       const [a, b, c] = combination;
-      if (board[a] === board[b] && board[b] === board[c] && board[a] !== '') {
+      if (board[a] === board[b] && board[b] === board[c] && board[a] !== "") {
         console.log("winner:" + board[a]); // Return the winning player (X or O)
       }
     }
-  
+
     return null; // No winner found
   }
-    
 
-    function gameOver(winner){
-      console.log(winner);
-      document.querySelector(".winText").innerHTML = winner;
-      document.querySelector(".endModal").style.display = "block";
-    }
-
-
+  function gameOver(winner) {
+    console.log(winner);
+    document.querySelector(".winText").innerHTML = winner;
+    document.querySelector(".endModal").style.display = "block";
+  }
 
   // When the user clicks on the button, open the modal
   btn.onclick = function () {
