@@ -109,6 +109,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //console.log(data);
   };
 
+  function aiMove(data, gameSpace){
+
+
+
+  }
+
   /*
   function checkForWin(board) {
     const winCombinations = [
