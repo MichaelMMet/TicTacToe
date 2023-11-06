@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("running");
 
   // Get the modal
   var modal = document.getElementById("myModal");
@@ -95,11 +94,14 @@ document.addEventListener("DOMContentLoaded", function () {
         data.board[parseInt(gameSpace.id)] = "X";
       
         const newMove2 = document.createElement("p");
+        const randInt = aiMove(data);
+        const aiSpace = document.getElementById(toString(randInt));
         newMove2.classList.add("oMove");
         newMove2.innerHTML = "O";
         data.currentPlayer = "X";
-        gameSpace.appendChild(newMove2);
-        data.board[aiMove(data)] = "O";
+        aiSpace.appendChild(newMove2);
+        data.board[randInt] = "O";
+        console.log(data.board);
       }
 
     }
@@ -145,12 +147,16 @@ document.addEventListener("DOMContentLoaded", function () {
     var randomInt = 1;
     do {
       randomInt = Math.floor(Math.random() * data.myArray.length);
-    } while (data.myArray[randomInt] != randomInt);
+      console.log("HUH")
+      
+    } while (data.myArray[randomInt] != randomInt + 1);
     console.log(
       "Random Int: " + randomInt + "array:" + data.myArray[randomInt]
     );
-    data.myArray.splice(randomInt, 1);
+    data.myArray[randomInt] = -1;
+    
     console.log("Array: " + data.myArray);
+    console.log("Random Int: "+ randomInt);
     return randomInt;
   }
 
@@ -170,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const [a, b, c] = combination;
       if (board[a] === board[b] && board[b] === board[c] && board[a] !== "") {
         console.log("winner:" + board[a]); // Return the winning player (X or O)
+        gameOver(board[a]);
       }
     }
 
@@ -177,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function gameOver(winner) {
-    console.log(winner);
+    console.log("hjkjj"+winner);
     document.querySelector(".winText").innerHTML = winner;
     document.querySelector(".endModal").style.display = "block";
   }
