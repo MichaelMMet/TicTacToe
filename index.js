@@ -3,14 +3,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Get the modal
   var modal = document.getElementById("myModal");
 
+  var endModal = document.getElementById("gameOverModal");
+
   // Get the button that opens the modal
   var btn = document.getElementById("modalBtn");
+
+  var endBtn = document.getElementById("newGameButton");
 
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
 
   //first, attach event listeners to form
-
   const form = document.querySelector("#myForm");
 
   form.addEventListener("submit", (event) => {
@@ -23,12 +26,15 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeGame(data);
   });
 
+  //initialize variables
   const initializeVariables = (data) => {
     data.gamemodeChoice = data.gamemodeChoice;
 
     data.board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     data.playerOne = "X";
     data.playerTwo = "O";
+    data.playerOneName = data.playerOneName;
+    data.playerTwoName = data.playerTwoName;
     data.round = 0;
     data.currentPlayer = "X";
     data.gameOver = false;
@@ -36,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
  
   };
 
+//adds event listeners to each pickable space
   const addEventListenerToGameBoard = (data) => {
     document.querySelectorAll(".gameSpace").forEach((gameSpace) => {
       gameSpace.addEventListener("click", (e) => {
@@ -53,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     addEventListenerToGameBoard(data);
   };
 
+  //controls logic for updating gameSpace and swiching current turn
   const playMove = (gameSpace, data) => {
     console.log("CHOICE" + data.gamemodeChoice);
     if (data.gamemodeChoice == 0) {
@@ -106,42 +114,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    checkForWin(data.board);
+    checkForWin(data);
 
-    //console.log(data);
   };
 
-  function aiMove(data, gameSpace){
+ 
 
-
-
-  }
-
-  /*
-  function checkForWin(board) {
-    const winCombinations = [
-      [1, 2, 3], [4, 5, 6], [7, 8, 9], // Rows
-      [1, 4, 7], [2, 5, 8], [3, 6, 9], // Columns
-      [1, 5, 9], [3, 5, 7]             // Diagonals
-    ];
-  
-    for (const combination of winCombinations) {
-      const [a, b, c] = combination;
-      if (board[a - 1] === board[b - 1] && board[b - 1] === board[c - 1]) {
-       // return board[a - 1]; // Return the winning player (X or O)
-        if(board[a-1] == 'X'){
-          console.log("x win")
-          gameOver('X');
-        }else{
-          console.log("y win")
-          gameOver('Y');
-        }
-      }
-      console.log("no winner")
-      return null; // No winner found
-    }
-  }
-  */
+  // choses a random move from the spots available 
   function aiMove(data) {
     console.log("AIMOVE");
     var randomInt = 1;
@@ -160,7 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return randomInt;
   }
 
-  function checkForWin(board) {
+  //checks if any player has won
+  function checkForWin(data) {
     const winCombinations = [
       [0, 1, 2],
       [3, 4, 5],
@@ -174,24 +154,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
     for (const combination of winCombinations) {
       const [a, b, c] = combination;
-      if (board[a] === board[b] && board[b] === board[c] && board[a] !== "") {
-        console.log("winner:" + board[a]); // Return the winning player (X or O)
-        gameOver(board[a]);
+      if (data.board[a] === data.board[b] && data.board[b] === data.board[c] && data.board[a] !== "") {
+        console.log("winner:" + data.board[a]); // Return the winning player (X or O)
+        gameOver(data.board[a], data);
       }
     }
 
     return null; // No winner found
   }
 
-  function gameOver(winner) {
-    console.log("hjkjj"+winner);
-    document.querySelector(".winText").innerHTML = winner;
+  //resets game and annouces who won
+  function gameOver(winner, data) {
+    console.log(data);
+    if(data.playerOneName == "" || data.playerTwoName == ""){
+    document.querySelector(".winText").innerHTML = "Player " + winner + " wins!";
+    }else if(winner == "X"){
+      document.querySelector(".winText").innerHTML = data.playerOneName + " wins!";
+    } else{
+      document.querySelector(".winText").innerHTML = data.playerTwoName + " wins!";
+    }
     document.querySelector(".endModal").style.display = "block";
+    initializeVariables(data);
+    document.querySelectorAll(".gameSpace").forEach((gameSpace) => {
+    gameSpace.innerHTML = "";
+    });
   }
 
   // When the user clicks on the button, open the modal
   btn.onclick = function () {
     modal.style.display = "block";
+  };
+
+  endBtn.onclick = function () {
+    endModal.style.display = "none"
   };
 
   // When the user clicks on <span> (x), close the modal
